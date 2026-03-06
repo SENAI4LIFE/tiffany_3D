@@ -11,7 +11,7 @@ It was firstly prototyped using Autodesk Fusion, then .step exported.<br>
 # Figure 2 - Onshape Model
 
 # Exporting
-onshape-to-robot was used to convert the onshape model assembly into .urdf, which is the description of the robot.
+onshape-to-robot was used to convert the onshape model assembly into .urdf, which is the description of the robot. <br>
 https://github.com/Rhoban/onshape-to-robot <br>
 https://onshape-to-robot.readthedocs.io/
 
