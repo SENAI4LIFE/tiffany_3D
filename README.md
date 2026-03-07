@@ -26,12 +26,12 @@ git clone https://github.com/SENAI4LIFE/tiffany_sim.git
 
 ### Create virtual environment
 ```bash
-python3 -m venv tiffany
+python3 -m venv venv
 ```
 
 ### Activate environment
 ```bash
-source ~/tiffany/bin/activate
+source ~/venv/bin/activate
 ```
 Shortcut
 ```bash
@@ -40,7 +40,7 @@ nano ~/.bashrc
 
 Paste at the end of bash:
 ```bash
-alias tiffany='source ~/tiffany/bin/activate'
+alias venv='source ~/venv/bin/activate'
 alias tiffanypy='cd tiffany_sim/workspace/pybullet'
 alias tiffanygz='cd tiffany_sim/workspace/gazebosim'
 ```
