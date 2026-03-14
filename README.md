@@ -76,7 +76,7 @@ source /opt/ros/jazzy/setup.bash
 ros2 run rviz2 rviz2 --ros-args -p use_sim_time:=true
 ```
 In RViz:
-1. Set **Fixed Frame** to `lidar_frame`
+1. Set **Fixed Frame** to `lidar`
 2. Click **Add → By topic → `/scan` → LaserScan**
 3. Click **Add → TF** to visualize joint frames
 ---
