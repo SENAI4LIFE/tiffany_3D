@@ -50,11 +50,18 @@ source ~/.bashrc
 
 ---
 
-## Build
+## Clone
 
 ```bash
 git clone https://github.com/SENAI4LIFE/tiffany_gazebo.git
 cd ~/tiffany_gazebo
+```
+
+---
+
+## Build
+
+```bash
 colcon build --symlink-install
 ```
 
