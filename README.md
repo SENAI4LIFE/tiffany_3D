@@ -19,10 +19,15 @@ Hardware repo: https://github.com/Penguin-Lab/tiffany
 
 ```bash
 git clone https://github.com/SENAI4LIFE/tiffany_gazebo.git
+```
+
+**2. Navigate to workspace**
+
+```bash
 cd ~/tiffany_gazebo
 ```
 
-**2. Install Dependencies**
+**3. Install Dependencies**
 
 ```bash
 sudo apt install -y \
@@ -40,13 +45,13 @@ sudo apt install -y \
   python3-jinja2 python3-yaml python3-typeguard
 ```
 
-**3. Build**
+**4. Build**
 
 ```bash
 colcon build --symlink-install
 ```
 
-**4. Environment Setup**
+**5. Environment Setup**
 
 ```bash
 source setup.bash
