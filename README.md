@@ -40,16 +40,16 @@ sudo apt install -y \
   python3-jinja2 python3-yaml python3-typeguard
 ```
 
-**3. Environment Setup**
-
-```bash
-source setup.bash
-```
-
-**4. Build**
+**3. Build**
 
 ```bash
 colcon build --symlink-install
+```
+
+**4. Environment Setup**
+
+```bash
+source setup.bash
 ```
 
 ---
