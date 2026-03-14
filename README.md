@@ -45,13 +45,19 @@ sudo apt install -y \
   python3-jinja2 python3-yaml python3-typeguard
 ```
 
-**4. Build**
+**4. Source ROS**
+
+```bash
+source /opt/ros/jazzy/setup.bash
+```
+
+**5. Build**
 
 ```bash
 colcon build --symlink-install
 ```
 
-**5. Environment Setup**
+**6. Environment Setup**
 
 ```bash
 source setup.bash
