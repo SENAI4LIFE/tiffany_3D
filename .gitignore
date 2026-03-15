@@ -1,0 +1,67 @@
+# ROS2 Workspace
+build/
+install/
+log/
+
+# Python
+__pycache__/
+*.py[cod]
+*$py.class
+*.so
+.Python
+*.egg-info/
+dist/
+*.egg
+
+# C++
+*.o
+*.so
+*.a
+*.exe
+*.out
+CMakeCache.txt
+CMakeFiles/
+cmake_install.cmake
+Makefile
+
+# IDEs
+.vscode/
+!.vscode/settings.json
+!.vscode/tasks.json
+!.vscode/launch.json
+!.vscode/extensions.json
+.idea/
+*.swp
+*.swo
+*~
+.DS_Store
+
+# Gazebo
+*.log
+.gazebo/
+
+# Bags (ROS2 recordings)
+*.bag
+*.db3
+*.mcap
+
+# Temporary files
+*.tmp
+*.bak
+*.backup
+
+# Documentation
+doxygen/
+*.pdf
+
+# OS specific
+Thumbs.db
+.Trashes# Docker
+
+# Docker
+.dockerignore
+
+# Onshape
+keys
+config.json
+encryption.key
