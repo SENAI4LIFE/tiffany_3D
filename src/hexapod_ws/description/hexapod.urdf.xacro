@@ -120,6 +120,18 @@
     </plugin>
   </gazebo>
 
+  <gazebo>
+    <plugin filename="gz-sim-odometry-publisher-system"
+            name="gz::sim::systems::OdometryPublisher">
+      <odom_frame>odom</odom_frame>
+      <robot_base_frame>base_link</robot_base_frame>
+      <odom_topic>/model/tiffany/odometry</odom_topic>
+      <tf_topic>/model/tiffany/tf</tf_topic>
+      <odom_publish_frequency>50</odom_publish_frequency>
+      <dimensions>3</dimensions>
+    </plugin>
+  </gazebo>
+
 
 
   <link name="base_link">
@@ -225,10 +237,6 @@
     <origin xyz="-0.03674 0.000649 0.15325" rpy="0 0 0"/>
   </joint>
 
-  <gazebo reference="lidar_joint">
-    <preserveFixedJoint>true</preserveFixedJoint>
-  </gazebo>
-
   <gazebo reference="lidar">
     <sensor name="lidar" type="gpu_lidar">
       <update_rate>10</update_rate>
@@ -244,6 +252,7 @@
           </horizontal>
           <vertical>
             <samples>1</samples>
+            <resolution>1</resolution>
             <min_angle>0</min_angle>
             <max_angle>0</max_angle>
           </vertical>
@@ -277,10 +286,6 @@
     <child  link="camera"/>
     <origin xyz="0.050842 -0.000288 0.11141" rpy="-0.00418892 0 0.00038394"/>
   </joint>
-
-  <gazebo reference="camera_joint">
-    <preserveFixedJoint>true</preserveFixedJoint>
-  </gazebo>
 
   <gazebo reference="camera">
     <sensor name="camera" type="camera">
