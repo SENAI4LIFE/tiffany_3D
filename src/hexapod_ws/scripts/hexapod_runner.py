@@ -279,9 +279,11 @@ class TFRemapper(Node):
         return frame[len(self.PREFIX):] if frame.startswith(self.PREFIX) else frame
 
     def _cb(self, msg: TFMessage):
+        now = self.get_clock().now().to_msg()
         for t in msg.transforms:
             t.header.frame_id = self._strip(t.header.frame_id)
             t.child_frame_id  = self._strip(t.child_frame_id)
+            t.header.stamp    = now
         self.pub.publish(msg)
 
 class ScanRelay(Node):
