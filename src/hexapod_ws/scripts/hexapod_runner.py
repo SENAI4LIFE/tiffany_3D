@@ -562,13 +562,15 @@ def main(args=None):
 
     try:
         executor.spin()
-    except KeyboardInterrupt:
+    except (KeyboardInterrupt, Exception):
         pass
     finally:
+        executor.shutdown()
         hexapod.destroy_node()
         tf_remap.destroy_node()
         scan_relay.destroy_node()
-        rclpy.shutdown()
+        if rclpy.ok():
+            rclpy.shutdown()
 
 if __name__ == '__main__':
     main()
