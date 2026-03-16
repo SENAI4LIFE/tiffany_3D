@@ -55,14 +55,17 @@ def generate_launch_description():
     jsb_spawner = Node(
         package='controller_manager',
         executable='spawner',
-        arguments=['joint_state_broadcaster'],
+        arguments=['joint_state_broadcaster',
+                   '--controller-manager-timeout', '30'],
         output='screen'
     )
 
     tiffany_ctrl_spawner = Node(
         package='controller_manager',
         executable='spawner',
-        arguments=['hexapod_controller', '--param-file', params_file],
+        arguments=['hexapod_controller',
+                   '--param-file', params_file,
+                   '--controller-manager-timeout', '30'],
         output='screen'
     )
 
@@ -96,10 +99,10 @@ def generate_launch_description():
         gazebo,
         spawn_robot,
         bridge,
-        TimerAction(period=8.0,  actions=[jsb_spawner]),
-        TimerAction(period=13.0, actions=[tiffany_ctrl_spawner]),
-        TimerAction(period=15.0, actions=[tiffany_brain]),
-        TimerAction(period=25.0, actions=[slam]),
-        TimerAction(period=27.0, actions=[slam_configure]),
-        TimerAction(period=30.0, actions=[slam_activate]),
+        TimerAction(period=12.0, actions=[jsb_spawner]),
+        TimerAction(period=17.0, actions=[tiffany_ctrl_spawner]),
+        TimerAction(period=22.0, actions=[tiffany_brain]),
+        TimerAction(period=35.0, actions=[slam]),
+        TimerAction(period=37.0, actions=[slam_configure]),
+        TimerAction(period=40.0, actions=[slam_activate]),
     ])
