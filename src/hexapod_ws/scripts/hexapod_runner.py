@@ -1,9 +1,13 @@
 #!/usr/bin/env python3
 import rclpy
 from rclpy.node import Node
+from rclpy.executors import MultiThreadedExecutor
+from rclpy.qos import QoSProfile, DurabilityPolicy, ReliabilityPolicy, HistoryPolicy
 from std_msgs.msg import Float64MultiArray, String
 from geometry_msgs.msg import Twist
 from sensor_msgs.msg import Imu
+from tf2_msgs.msg import TFMessage
+from sensor_msgs.msg import LaserScan
 
 import math
 import numpy as np
@@ -255,6 +259,47 @@ def compute_dar_patinha(k, xyz_ini):
         results.append(ik(xyz))
     return results
 
+class TFRemapper(Node):
+    PREFIX = 'tiffany/'
+
+    def __init__(self):
+        super().__init__('tf_remapper')
+
+        be_qos = QoSProfile(
+            reliability=ReliabilityPolicy.BEST_EFFORT,
+            durability=DurabilityPolicy.VOLATILE,
+            history=HistoryPolicy.KEEP_LAST,
+            depth=100,
+        )
+        self.pub = self.create_publisher(TFMessage, '/tf', 100)
+        self.sub = self.create_subscription(TFMessage, '/tf_raw', self._cb, be_qos)
+        self.get_logger().info('TF remapper active')
+
+    def _strip(self, frame: str) -> str:
+        return frame[len(self.PREFIX):] if frame.startswith(self.PREFIX) else frame
+
+    def _cb(self, msg: TFMessage):
+        for t in msg.transforms:
+            t.header.frame_id = self._strip(t.header.frame_id)
+            t.child_frame_id  = self._strip(t.child_frame_id)
+        self.pub.publish(msg)
+
+class ScanRelay(Node):
+    def __init__(self):
+        super().__init__('scan_relay')
+        be_qos = QoSProfile(
+            reliability=ReliabilityPolicy.BEST_EFFORT,
+            durability=DurabilityPolicy.VOLATILE,
+            history=HistoryPolicy.KEEP_LAST,
+            depth=10,
+        )
+        self.pub = self.create_publisher(LaserScan, '/scan', 10)
+        self.sub = self.create_subscription(LaserScan, '/scan_bridge', self._cb, be_qos)
+        self.get_logger().info('Scan relay active')
+
+    def _cb(self, msg: LaserScan):
+        self.pub.publish(msg)
+
 class HexapodRunner(Node):
     def __init__(self):
         super().__init__('hexapod_runner')
@@ -456,8 +501,6 @@ class HexapodRunner(Node):
             if self.state in ('WALKING', 'TURNING'):
                 self.state = 'IDLE'
 
-
-
     def _step(self):
 
         state = self.state
@@ -507,13 +550,24 @@ class HexapodRunner(Node):
 
 def main(args=None):
     rclpy.init(args=args)
-    node = HexapodRunner()
+
+    hexapod    = HexapodRunner()
+    tf_remap   = TFRemapper()
+    scan_relay = ScanRelay()
+
+    executor = MultiThreadedExecutor()
+    executor.add_node(hexapod)
+    executor.add_node(tf_remap)
+    executor.add_node(scan_relay)
+
     try:
-        rclpy.spin(node)
+        executor.spin()
     except KeyboardInterrupt:
         pass
     finally:
-        node.destroy_node()
+        hexapod.destroy_node()
+        tf_remap.destroy_node()
+        scan_relay.destroy_node()
         rclpy.shutdown()
 
 if __name__ == '__main__':
