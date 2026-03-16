@@ -239,16 +239,16 @@
 
   <gazebo reference="lidar">
     <sensor name="lidar" type="gpu_lidar">
-      <update_rate>10</update_rate>
+      <update_rate>15</update_rate>
       <topic>/scan</topic>
       <gz_frame_id>lidar</gz_frame_id>
       <lidar>
         <scan>
           <horizontal>
-            <samples>360</samples>
+            <samples>720</samples>
             <resolution>1</resolution>
-            <min_angle>-3.14159</min_angle>
-            <max_angle>3.14159</max_angle>
+            <min_angle>-3.14159265</min_angle>
+            <max_angle>3.14159265</max_angle>
           </horizontal>
           <vertical>
             <samples>1</samples>
@@ -258,18 +258,18 @@
           </vertical>
         </scan>
         <range>
-          <min>0.12</min>
-          <max>10.0</max>
+          <min>0.10</min>
+          <max>12.0</max>
           <resolution>0.01</resolution>
         </range>
         <noise>
           <type>gaussian</type>
           <mean>0.0</mean>
-          <stddev>0.01</stddev>
+          <stddev>0.008</stddev>
         </noise>
       </lidar>
       <always_on>true</always_on>
-      <visualize>false</visualize>
+      <visualize>true</visualize>
     </sensor>
   </gazebo>
 
